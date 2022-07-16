@@ -5,13 +5,11 @@
             <template v-slot:box >
 
                     <div class="search-input flex flex-row">
-
-                        <div @click="seearchMovie">
+                        <div @click="seearchMovie" class="mr-7 text-base leading-5">
                             Search by release date :
                         </div>
                         <!-- <input type="date"> -->
                         <date-picker  @rangeDate="setRangeSearch" @clearRange="clearRange"/>
-
                     </div>
 
                     <base-button @clickButton="searchMovie" class="ml-auto">
@@ -40,12 +38,16 @@
                     <div class="pagination flex flex-col items-center justify-center">
 
                         <div class="h-max">
-                            <span class="prev-next text-right text-base font-bold">
+                            <span 
+                                @click="prevPage"
+                                class="prev-next text-right text-base font-bold">
                                 Previuos Page
                             </span>
                             <span class="line mx-7 border-r-2">
                             </span>
-                            <span class="prev-next active text-left font-bold">
+                            <span 
+                                @click="nexPage"
+                                class="prev-next text-left text-base  font-bold">
                                 Next Page
                             </span>
                         </div>
@@ -87,7 +89,10 @@ export default {
             rangeFrom:[],
             rangeTo:[],
             resultSearch:[],
-            isLoading:false
+            isLoading:false,
+            indexPage:1,
+            pageSize:12,
+            modeSch:false
         }
     },
     components:{
@@ -99,21 +104,42 @@ export default {
         numberResults(){
             let length = this.showMovies.length;
             if( length){
-                return `1 - ${length}`;
+                let start = (this.indexPage - 1) * this.pageSize + 1;
+                let end = start + length - 1;
+                return `${start} - ${end}`;
             }
             else{
                 return 'no items'
             }
         },
         showMovies(){
-            if( this.rangeFrom.length === 0  && this.rangeTo.length === 0 ){
-                return this.movies;
-            }else{
-                return this.resultSearch;
+            if(this.rangeFrom.length && this.rangeTo.length && this.modeSch){
+                return this.paginate(this.resultSearch,this.pageSize,this.indexPage);
+            }
+            else{
+                return this.paginate(this.movies,this.pageSize,this.indexPage);
             }
         }
     },
     methods:{
+        prevPage(){
+            if(this.indexPage === 1){
+                return
+            }else{
+                this.indexPage = this.indexPage - 1;
+            }
+        },
+        nexPage(){
+            if( (this.indexPage * this.pageSize ) > this.movies.length){
+                return
+            }else{
+                this.indexPage = this.indexPage + 1;
+            }
+        },
+        paginate(array, page_size, page_number) {
+            // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
+            return array.slice((page_number - 1) * page_size, page_number * page_size);
+        },
         setRangeSearch(date){
             // console.log('date',date);
             this.rangeFrom = date[0].split("-");
@@ -138,10 +164,13 @@ export default {
             });
             this.resultSearch = temp;
 
+            this.modeSch = true;
+
         },
         clearRange(){
            this.rangeFrom = [];
            this.rangeTo = []; 
+           this.modeSch = false;
         }
     }
 }
@@ -162,31 +191,15 @@ export default {
     text-align: left;
     margin-right: 29px;
 }
-
+.mx-datepicker-range{
+    width: 221px;
+}
 .search-input input{
     /* width: 221px; */
     background: #FFFFFF;
     border: 1px solid #CFCFCF;
     height: 33px;
 }
-
-/* .button{
-    background: #549DF2;
-    border-radius: 100px;
-    width:74px;
-    height:33px;
-    cursor: pointer;
-}
-
-.button span{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    margin: 12px 7px;
-    color: #FFFFFF;
-} */
 
 .results{
     padding: 2px 5px;
@@ -200,7 +213,7 @@ export default {
     color: rgba(0,0,0,.48);
     cursor: pointer;
 }
-.pagination .prev-next.active{
+.pagination .prev-next:hover{
     color:#318FE7;
 }
 .pagination .num-results{
