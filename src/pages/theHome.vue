@@ -91,7 +91,7 @@ export default {
             resultSearch:[],
             isLoading:false,
             indexPage:1,
-            pageSize:12,
+            pageSize:20,
             modeSch:false
         }
     },
