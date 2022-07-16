@@ -24,16 +24,21 @@
             </div>
 
             <div class="genres flex flex-wrap mt-4 mb-7">
-                <span class="text-xs"
+
+                <span class="text-xs flex items-center"
                       v-for="(genre,index) in movie.genres"
                       :key="genre">
+
                       <span v-if="!(index === 0)"
-                      class="material-symbols-outlined">
+                      class="material-symbols-outlined mx-1">
                       fiber_manual_record
                       </span>
-                      {{ genre }}
+                      <span>
+                          {{ genre }}
+                      </span>
                     
                 </span>
+
             </div>
 
           </div>
@@ -45,7 +50,7 @@
 </template>
 
 <script>
-// import VLazyImage from "v-lazy-image";
+
 export default {
   props:['movie'],
   data(){
@@ -85,6 +90,7 @@ export default {
 .poster img{
     border-radius: 6px 0px 0px 6px;
     transition: .3s ease-out;
+    object-fit: cover;
 }
 .poster:hover img{
     transform: scale(1.1);
@@ -104,6 +110,8 @@ export default {
 .genres .material-symbols-outlined{
   font-size: 4px;
   color:#505050;
+  background-color: #505050;
+  border-radius: 50%;
 }
 
 </style>

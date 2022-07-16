@@ -13,7 +13,6 @@ const mutations ={
             ...state.theMovie,
             credits:payload
         }
-        // console.log('movie',state)
     }
 
 }

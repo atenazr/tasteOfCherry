@@ -1,6 +1,6 @@
 <template>
 
-      <base-page>
+      <base-page v-if="movie">
 
           <template v-slot:box>
             <!-- box -->
@@ -32,109 +32,125 @@
             
             <div v-else class="my-16 py-3.5">
               <!-- lead section -->
-              <div class="flex flex-row items-start justify-between">
+                  <div class="flex flex-row items-start justify-between">
 
-                <div class="cover" >
-                  <img :src="img" alt="ttt" >
+                    <div class="cover" >
+                      <img :src="img" alt="ttt" >
+                    </div>
+
+                    <div class="info">
+
+                        <base-item-info>
+
+                              <template v-slot:name>
+                                  Budget
+                              </template>
+                              <template v-slot:value>
+                                  $ {{ budget }}
+                              </template>
+
+                        </base-item-info>
+
+                        <base-item-info>
+
+                              <template v-slot:name>
+                                  Revenue
+                              </template>
+                              <template v-slot:value>
+                                  $ {{ revenue }}
+                              </template>
+
+                        </base-item-info>
+
+                        <base-item-info>
+
+                              <template v-slot:name>
+                                  Release Date
+                              </template>
+                              <template v-slot:value>
+                                  {{ releaseDate }}
+                              </template>
+
+                        </base-item-info>
+
+                        <base-item-info>
+
+                              <template v-slot:name>
+                                  Runtime
+                              </template>
+                              <template v-slot:value>
+                                  {{ runtime }}
+                              </template>
+
+                        </base-item-info>
+
+                        <base-item-info>
+
+                              <template v-slot:name>
+                                  Score
+                              </template>
+                              <template v-slot:value>
+                                    <span>
+                                      {{ voteAverage }}
+                                    </span>
+                                    <span class="sub-item">
+                                      ( {{voteCount}} votes )
+                                    </span>
+                              </template>
+
+                        </base-item-info>
+
+                        <base-item-info>
+
+                              <template v-slot:name>
+                                  Genres
+                              </template>
+                              <template v-slot:value>
+                                  {{ genres }}
+                              </template>
+
+                        </base-item-info>
+
+                        <base-item-info>
+
+                              <template v-slot:name>
+                                  IMDB Link
+                              </template>
+                              <template v-slot:value>
+                                  <a :href="imdbLink">link</a>
+                              </template>
+
+                        </base-item-info>
+
+                        <base-item-info>
+
+                              <template v-slot:name>
+                                  Homepage Link
+                              </template>
+                              <template v-slot:value>
+                                  <a :href="homeLink">link</a>
+                              </template>
+
+                        </base-item-info>
+
+                    </div>
+
                 </div>
-
-                <div class="info">
-
-                    <div class="item flex flex-row items-center justify-between">
-                      <span class="font-bold text-base leading-5">
-                        Budget
-                      </span>
-                      <span class="text-base leading-5">
-                        $ {{ budget }}
-                      </span>
-                    </div>
-
-                    <div class="item flex flex-row items-center justify-between">
-                      <span class="font-bold text-base leading-5">
-                        Revenue
-                      </span>
-                      <span class="text-base leading-5">
-                        $ {{ revenue }}
-                      </span>
-                    </div>
-
-                    <div class="item flex flex-row items-center justify-between">
-                      <span class="font-bold text-base leading-5">
-                        Release Date
-                      </span>
-                      <span class="text-base leading-5">
-                        {{ releaseDate }}
-                      </span>
-                    </div>
-
-                    <div class="item flex flex-row items-center justify-between">
-                      <span class="font-bold text-base leading-5">
-                        Runtime
-                      </span>
-                      <span class="text-base leading-5">
-                        {{ runtime }}
-                      </span>
-                    </div>
-
-                    <div class="item flex flex-row items-center justify-between">
-                      <span class="font-bold text-base leading-5">
-                        Score
-                      </span>
-                      <span class="text-base leading-5">
-                        <span>
-                          {{ voteAverage }}
-                        </span>
-                        <span class="sub-item">
-                          ( {{voteCount}} votes )
-                        </span>
-                      </span>
-                    </div>
-
-                    <div class="item flex flex-row items-center justify-between">
-                      <span class="font-bold text-base leading-5">
-                        Genres
-                      </span>
-                      <span class="text-base leading-5">
-                            {{ genres }}
-                      </span>
-                    </div>
-
-                    <div class="item flex flex-row items-center justify-between">
-                      <span class="font-bold text-base leading-5">
-                        IMDB Link
-                      </span>
-                      <span class="text-base leading-5">
-                        <a :href="imdbLink">link</a>
-                      </span>
-                    </div>
-
-                    <div class="item flex flex-row items-center justify-between">
-                      <span class="font-bold text-base leading-5">
-                        Homepage Link
-                      </span>
-                      <span class="text-base leading-5">
-                        <a :href="homeLink">link</a>
-                      </span>
-                    </div>
-
-                </div>
-
-              </div>
 
               <!-- description section -->
-              <div class="description">
-                {{ overview }}
-              </div>
+                  <div class="description">
+                    {{ overview }}
+                  </div>
 
               <!-- credits section -->
-              <div class="">
-                <div class="text-lg font-bold mb-3">
-                  Credit :
-                </div>
-                <div class="credits text-sm">
-                  {{ credits }}
-                </div>
-              </div>
+                  <div class="">
+                    <div class="text-lg font-bold mb-3">
+                      Credit :
+                    </div>
+                    <div class="credits text-sm">
+                      {{ credits }}
+                    </div>
+                  </div>
                   
             </div>
 
@@ -162,7 +178,7 @@ export default {
           await this.$store.dispatch('getCreditMovie',{id:this.id});
           
           this.movie = this.$store.getters.theMovie;
-          console.log('movie',this.movie);
+          // console.log('movie',this.movie);
         }catch(err){
           console.log('err',err)
         }
@@ -261,6 +277,7 @@ export default {
   border-radius: 12px;
   height: 100%;
   width: 100% !important;
+  object-fit: cover;
 }
 .info{
   width: 606px;

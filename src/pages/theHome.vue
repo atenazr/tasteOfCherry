@@ -1,11 +1,8 @@
 <template>
-    <div>
         <base-page>
 
             <!-- search box -->
             <template v-slot:box >
-
-                <!-- <div class="search-container flex flex-row items-center justify-between"> -->
 
                     <div class="search-input flex flex-row">
 
@@ -20,13 +17,11 @@
                     <base-button @clickButton="searchMovie" class="ml-auto">
                     Search</base-button>
 
-                <!-- </div> -->
-
             </template>
 
+            <!-- results - list of movies   -->
             <template v-slot:content>
                 <div>
-                    <!-- results - list of movies   -->
 
                     <div class="loading" v-if="isLoading">
                         <base-spinner></base-spinner>
@@ -65,16 +60,16 @@
             </template>
 
         </base-page>
-    </div>
 </template>
 
 <script>
 import singleMovie from '../components/singleMovie.vue'
 import datePicker from '../components/datePicker.vue' 
-import BasePage from '@/components/basePage.vue';
+import BasePage from '@/components/UI/basePage.vue';
+
 export default {
     async created(){
-        console.log('home');
+       
         this.isLoading = true;
         try{
             await this.$store.dispatch('loadGenres');
@@ -148,14 +143,7 @@ export default {
            this.rangeFrom = [];
            this.rangeTo = []; 
         }
-    },
-
-    mounted(){
-        console.log('mounted')
     }
-    // beforeRouteUpdate(){
-    //     this.movies = this.$store.getters.movies;
-    // }
 }
 </script>
 

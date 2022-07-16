@@ -19,10 +19,6 @@
 
 export default {
   name: 'App'
-  // ,
-  // async created(){
-  //   await this.$store.dispatch('loadMovies')
-  // }
 }
 </script>
 
@@ -35,6 +31,7 @@ export default {
 }
 #app{
   width: 1440px;
+  margin: 0 auto;
 }
 .top-bar{
   width: 100%;

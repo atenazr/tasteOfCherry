@@ -8,6 +8,7 @@ const url_imdb = 'https://www.imdb.com/';
 
 const actions ={
 
+    // fetch information of all movies 
     async loadMovies(context){
 
             const response = await fetch(
@@ -43,10 +44,11 @@ const actions ={
                 movies.push(movie);
             }
 
-            console.log('movies',movies);
+            // console.log('movies',movies);
             context.commit('setMovies', movies);
     },
 
+    // fetch all genres
     async loadGenres(context){
 
         const response = await fetch(
@@ -65,6 +67,7 @@ const actions ={
 
     },
 
+    // fetch information of slected movie
     async getTheMovie(context,payload){
 
         const response = await fetch(
@@ -72,7 +75,7 @@ const actions ={
             );
 
             const responseData = await response.json();
-            console.log('response',responseData);
+            // console.log('response',responseData);
 
             if (!response.ok) {
             const error = new Error(responseData.message || 'Failed to fetch!');
@@ -90,6 +93,7 @@ const actions ={
             context.commit('setTheMovie',movie);
     },
 
+    // fetch top 10 credits of slected movie
     async getCreditMovie(context,payload){
 
         const response = await fetch(
@@ -118,7 +122,7 @@ const actions ={
                 let element = sortArr[key].name;
                 credits.push(element);
             }
-            console.log('sort',credits);
+            // console.log('sort',credits);
 
             context.commit('addCredit',credits.reverse());
     }
