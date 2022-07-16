@@ -130,7 +130,7 @@ export default {
             }
         },
         nexPage(){
-            if( (this.indexPage * this.pageSize ) > this.movies.length){
+            if( (this.indexPage * this.pageSize ) >= this.movies.length){
                 return
             }else{
                 this.indexPage = this.indexPage + 1;
