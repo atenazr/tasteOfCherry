@@ -71,17 +71,22 @@ import BasePage from '@/components/UI/basePage.vue';
 
 export default {
     async created(){
-       
-        this.isLoading = true;
-        try{
-            await this.$store.dispatch('loadGenres');
-            await this.$store.dispatch('loadMovies');
-            this.movies = await this.$store.getters.movies;
-            // console.log('home',this.movies);
-        }catch(error){
-            console.log('error',error);
-        }
-        this.isLoading =false;
+
+            console.log('home c1',this.$store.getters.movies);
+            this.movies = this.$store.getters.movies;
+
+            if( this.movies.length === 0){
+                    this.isLoading = true;
+                    try{
+                        await this.$store.dispatch('loadGenres');
+                        await this.$store.dispatch('loadMovies');
+                        this.movies = await this.$store.getters.movies;
+                        console.log('home',this.movies);
+                    }catch(error){
+                        console.log('error',error);
+                    }
+                    this.isLoading =false;
+            }
     },
     data(){
         return{
@@ -91,7 +96,7 @@ export default {
             resultSearch:[],
             isLoading:false,
             indexPage:1,
-            pageSize:20,
+            pageSize:12,
             modeSch:false
         }
     },

@@ -5,7 +5,9 @@
       <div class=" flex flex-row h-full">
 
           <div class="poster flex-none h-full"  >
-              <img :src="movieP.backdrop_path" alt="tttt" class="h-full" />
+              <img 
+                v-if="movieP.backdrop_path"
+                :src="movieP.backdrop_path" alt="tttt" class="h-full" />
           </div>
 
           <div class="info flex flex-col my-4 ml-4 mr-8 h-full">
