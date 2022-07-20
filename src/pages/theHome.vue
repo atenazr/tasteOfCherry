@@ -27,7 +27,7 @@
 
                     <div class="results grid grid-cols-3 gap-y-8 gap-x-16" v-else>
 
-                        <single-movie 
+                        <single-movie
                             v-for="movie in showMovies"
                             :key="movie.id"
                             :movie="movie"></single-movie>
@@ -38,14 +38,14 @@
                     <div class="pagination flex flex-col items-center justify-center">
 
                         <div class="h-max">
-                            <span 
+                            <span
                                 @click="prevPage"
                                 class="prev-next text-right text-base font-bold">
                                 Previuos Page
                             </span>
                             <span class="line mx-7 border-r-2">
                             </span>
-                            <span 
+                            <span
                                 @click="nexPage"
                                 class="prev-next text-left text-base  font-bold">
                                 Next Page
@@ -57,7 +57,7 @@
                         </div>
 
                     </div>
-                
+
                 </div>
             </template>
 
@@ -66,26 +66,24 @@
 
 <script>
 import singleMovie from '../components/singleMovie.vue'
-import datePicker from '../components/datePicker.vue' 
+import datePicker from '../components/datePicker.vue'
 import BasePage from '@/components/UI/basePage.vue';
 
 export default {
     async created(){
-
-            console.log('home c1',this.$store.getters.movies);
-            this.movies = this.$store.getters.movies;
-
-            if( this.movies.length === 0){
-                    this.isLoading = true;
-                    try{
-                        await this.$store.dispatch('loadGenres');
-                        await this.$store.dispatch('loadMovies');
-                        this.movies = await this.$store.getters.movies;
-                        console.log('home',this.movies);
-                    }catch(error){
-                        console.log('error',error);
-                    }
-                    this.isLoading =false;
+            // console.log('home c1',this.$store.getters.movies);
+        this.movies = this.$store.getters.movies;
+        if( this.movies.length === 0){
+                this.isLoading = true;
+                try{
+                    await this.$store.dispatch('loadGenres');
+                    await this.$store.dispatch('loadMovies');
+                    this.movies = await this.$store.getters.movies;
+                    // console.log('home',this.movies);
+                }catch(error){
+                    console.log('error',error);
+                }
+                this.isLoading =false;
             }
     },
     data(){
@@ -174,7 +172,7 @@ export default {
         },
         clearRange(){
            this.rangeFrom = [];
-           this.rangeTo = []; 
+           this.rangeTo = [];
            this.modeSch = false;
         }
     }
